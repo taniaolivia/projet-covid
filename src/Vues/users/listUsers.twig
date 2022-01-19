@@ -1,0 +1,37 @@
+{% extends 'main.twig' %}
+
+{% block title %}List of users{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>List of users</h1>
+        <div class="search">
+            <form method="post" action={{ url_for('searchUser') }}>
+                <input type="text" placeholder="Search.." name="search" class="searchText">
+                <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+                {% if token %}
+                    <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                    <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+                {% endif %}
+            </form>
+        </div>
+        <p><a href= {{ url_for('listUsers') }}><button type="button" name="back" id="newGroup">Back to list users</button></a></p>
+
+        {% for user in list %}
+        <div class="nav-list">
+            <ul>
+                <li><a href= {{ url_for('profiles', { 'username': user.username })}}>{{ user.username }}</a>
+            </ul>
+        </div>
+        {% endfor %}
+        {% for user2 in listSearch %}
+            <div class="nav-list">
+                <ul>
+                    <li><a href= {{ url_for('profiles', { 'username': user2.username })}}>{{ user2.username }}</a>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

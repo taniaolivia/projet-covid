@@ -1,0 +1,28 @@
+{% extends 'main.twig' %}
+
+{% block title %}Positive COVID-19{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Report positive COVID-19</h1>
+        <form action={{ url_for('reportPositive') }} method="post">
+            <br>
+            <p><strong id="info">{{ session }}</strong>, fill in the form below :</p>
+            <br>
+            <p><strong id="info">1. Have you taken a PCR-RT test ? </strong><input type="radio" name="test" value="yes"> Yes   <input type="radio" name="test" value="no"> No</p>
+            <p><strong id="info">2. Result of the PCR-RT :  </strong><input type="radio" name="infected" value="yes"> Positive   <input type="radio" name="infected" value="no"> Negative</p>
+            <p><button type="submit" name="report" id="submit">Report</button></p>
+            {% if token %}
+                <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+            {% endif %}
+        </form>
+
+        <p id="message-warning">{{ message }}</p>
+
+        <div id="button-div">
+            <p><a href= {{ url_for('signin') }}><input type="button" value="Back to home" name="home" class="button button1"></a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

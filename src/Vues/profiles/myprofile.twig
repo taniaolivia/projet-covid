@@ -1,0 +1,46 @@
+{% extends 'main.twig' %}
+
+{% block title %}My account{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <div id="information">
+            <h1>My account</h1>
+            {% for profile in uname %}
+                <p><strong id="info">Username : </strong>{{ profile.username }}</p>
+                {% for user in info %}
+                    <p><strong id="info">Email : </strong>{{ user.email }}</p>
+                    <p><strong id="info">Infected : </strong>{{ user.infected }}</p>
+                    <p><strong id="info">Status : </strong>{{ user.status }}</p>
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+
+        <br>
+        <p id="message-warning">To add or update your location to your data, please kindly click the "Get my location" button before clicking the "Add my location" button ! But
+        you can also just click the "Get my location" button without adding it to your data.</p>
+
+        <div id="map"></div>
+
+        <div id="location-div">
+            <button id='geo' class="location1">Get my location</button>
+
+            <form action= {{ url_for('addLocation') }} method="post">
+                {% for profile in uname %}
+                <input type="hidden" name="username" id="uname" value={{ profile.username }}>
+                {% endfor %}
+                <input type="hidden" name="lat" id="lat">
+                <input type="hidden" name="long" id="long">
+                <button type="submit" class="location2">Add my location</button>
+            </form>
+        </div>
+
+        <div id="button-div">
+            <p><a href= {{ url_for('form_pwd') }}><input type="button" value="Change password" name="changePwd" class="button button1"></a></p>
+            <p><a href= {{ url_for('deleteuser') }}><input type="button" value="Delete account" name="deleteAcc" class="button button2"></a></p>
+            <p><a href= {{ url_for('signout') }}><input type="submit" value="Sign out" class="button button3"/></a></p>
+        </div>
+</div>
+</div>
+{% endblock %}

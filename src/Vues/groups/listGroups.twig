@@ -1,0 +1,41 @@
+{% extends 'main.twig' %}
+
+{% block title %}List of groups{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>List of groups</h1>
+        <div class="search">
+            <form method="post" action={{ url_for('searchGroup') }}>
+                <input type="text" placeholder="Search.." name="search" class="searchText">
+                <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+                {% if token %}
+                    <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                    <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+                {% endif %}
+            </form>
+        </div>
+
+        <div id="list-div">
+            <p><a href= {{ url_for('createGroup')}}><button type="button" class="list1">Create new group</button></a></p>
+            <p><a href= {{ url_for('listGroups') }}><button type="button" name="back" class="list2">Back to list groups</button></a></p>
+        </div>
+
+        {% for group in list %}
+        <div class="nav-list">
+            <ul>
+                <li><a href= {{ url_for('groups', { 'name': group.name })}}>{{ group.name }}</a>
+            </ul>
+        </div>
+        {% endfor %}
+        {% for group2 in listSearch %}
+            <div class="nav-list">
+                <ul>
+                    <li><a href= {{ url_for('groups', { 'name': group2.name })}}>{{ group2.name }}</a>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

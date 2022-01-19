@@ -1,0 +1,32 @@
+{% extends 'main.twig' %}
+
+{% block title %}Profiles{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Profile</h1>
+            {% for profile in uname %}
+                <strong id="info">Username : </strong>{{ profile.username }}
+                {% for user in info %}
+                    <p><strong id="info">Email : </strong>{{ user.email }}</p>
+                    <p><strong id="info">Infected : </strong>{{ user.infected }}</p>
+                    <p><strong id="info">Status : </strong>{{ user.status }}</p>
+                {% endfor %}
+            {% endfor %}
+
+        <p id="message-warning">{{ message }}</p>
+
+        <div id="button-div">
+            <p><a href= {{ url_for('myContact') }}><input type="button" value="Back to my contact" name="back" class="button button3"></a></p>
+            <form method="get" action={{ url_for('deleteContact') }}>
+                {% for profile in uname %}
+                    <p><input type="hidden" name="deleteContact" value="{{ profile.username }}"><input type="submit" value="Delete contact" class="button button11"></p>
+                {% endfor %}
+            </form>
+            {% for profile in uname %}
+                <p><a href = {{ url_for('createChatContact', {'friend' : profile.username}) }}><input type="submit" value="Private messenger" class="button button2"></a></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'main.twig' %}
+
+{% block title %}Post{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+            {% for post in info %}
+                 <h1>{{ post.title }}</h1>
+                 <p><strong id="info">Author : </strong>{{ post.user_username }}</p>
+                 <p><strong id="info">Description : </strong>{{ post.description }}</p>
+                {% if post.attachment is not null %}
+                    <p><embed src="/uploads/{{ post.attachment }}" width="100%" height="100%" alt=""/></p>
+                    <a href="/uploads/{{ post.attachment }}" download={{ post.attachment }}><button class="downloadBtn"><i class="fa fa-download"></i></button></a>
+                {% endif %}
+                <form method="get" action={{ url_for('deletePost') }}>
+                    <input type="hidden" name="deletePost" value="{{ post.title }}"><button type="submit" id="submit">Delete post</button></a></p>
+                </form>
+            {% endfor %}
+        <p id="message-warning">{{ message }}</p>
+        <div id="button-div">
+            {% if group %}
+                <p><a href= {{ url_for('listPosts', {'group': group}) }}><input type="button" value="Back to list posts" name="back" class="button button1"></a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

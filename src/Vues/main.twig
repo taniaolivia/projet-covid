@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {%  block head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link rel="stylesheet" href= {{ base_path() }}"/css/main.css" type='text/css'/>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+                  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+                  crossorigin=""/>
+         <script type="text/javascript" src={{ base_path() }}"/js/main.js"></script>
+         <script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+                    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+                    crossorigin=""></script>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="grid">
+            <div class="backgroundimg">
+                <img src= {{ base_path() }}"/img/logo1.png" alt="logo">
+            </div>
+            <nav class="nav">
+                <ul>
+                   <li><a href = {{ url_for('signin') }}>My account</a></li>
+                   <li><a href = {{ url_for('signup') }}>Create an account</a></li>
+                </ul>
+                <ul>
+                    <li><a href = {{ url_for('myContact') }}>My contact</a></li>
+                    <li><a href = {{ url_for('myGroup') }}>My group</a></li>
+                </ul>
+                <ul>
+                    <li><a href = {{ url_for('listUsers') }}>List of all users</a></li>
+                    <li><a href = {{ url_for('listGroups') }}>List of all groups</a></li>
+                </ul>
+                <ul>
+                    <li><a href = {{ url_for('listUsersByLocation') }}>Infected Users' Location</a></li>
+                    <li><a href = {{ url_for('formPositive') }}>Report positive COVID-19</a></li>
+                </ul>
+            </nav>
+            <div id="content">{% block content %}{% endblock %}</div>
+        </div>
+        <script type="text/javascript" src={{ base_path() }}"/js/map-localisation.js"></script>
+
+    </body>
+</html>

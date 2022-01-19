@@ -1,0 +1,46 @@
+{% extends 'main.twig' %}
+
+{% block title %}Group messenger{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Group messenger</h1>
+        <div class="messengerbg">
+            <section id="messagess">
+                {% for infos in info %}
+                    <p class="friend"><strong>{{ infos.me }}</strong></p>
+                    <p class="friend"><strong>{{ infos.username }}</strong></p>
+                    {% if infos.file is not null %}
+                        <p><embed src="/uploads/{{ infos.file }}" width="100%" height="100%" alt=""/></p>
+                        <a href="/uploads/{{ infos.file }}" download={{ infos.file }}><button class="downloadBtn"><i class="fa fa-download"></i></button></a>
+                    {% endif %}
+                    <p>{{ infos.message }}</p>
+                    <br>
+                {% endfor %}
+            </section>
+
+            <div class="formmessage">
+                <form action={{ url_for('addChatGroup') }} method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" accept="image/*, .doc, .pdf, .docx, video/*, audio/*" id="file">
+                    <textarea name="message" id="message" placeholder="Write a message"></textarea>
+                    {% for group in group %}
+                        <input type="hidden" name="group" value="{{ group.name }}">
+                    {% endfor %}
+                    <button type="submit">
+                        <i class="fa fa-paper-plane fa-lg"></i>
+                    </button>
+                    {% if token %}
+                        <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                        <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div id="button-div">
+            {% if group_name  %}
+                <p><a href= {{ url_for('groups', {'name': group_name } ) }}><input type="button" value="Back to group" name="back" class="button button1"></a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

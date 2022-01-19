@@ -1,0 +1,25 @@
+{% extends 'main.twig' %}
+
+{% block title %}Create a new group{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Create a new group</h1>
+        <form action= {{ url_for('addGroup', { 'name': group.name }) }} method="post">
+            <p><strong id="info">Name : </strong><input type="text" name="name"></p>
+            <button type="submit" id="submit">Submit</button>
+            {% if token %}
+                <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+            {% endif %}
+        </form>
+        <p id="message-warning">{{ message }}</p>
+
+        <div id="button-div">
+            <p><a href= {{ url_for('listGroups') }}><input type="button" value="Back to list groups" name="back" class="button button1"></a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

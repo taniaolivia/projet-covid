@@ -1,0 +1,43 @@
+{% extends 'main.twig' %}
+
+{% block title %}Private messenger{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Chat messenger</h1>
+        <div class="messengerbg">
+            <section id="messagess">
+                {% for chat in chats %}
+                    <p class="friend"><strong>{{ chat.me }}</strong></p>
+                    {% if chat.file is not null %}
+                        <p><embed src="/uploads/{{ chat.file }}" width="100%" height="100%" alt=""/></p>
+                        <a href="/uploads/{{ chat.file }}" download={{ chat.file }}><button class="downloadBtn"><i class="fa fa-download"></i></button></a>
+                    {% endif %}
+                    <p>{{ chat.message }}</p>
+                    <br>
+                {% endfor %}
+            </section>
+
+            <div class="formmessage">
+                <form method="post" enctype="multipart/form-data" action={{ url_for('addChatContact') }}>
+                    <input type="file" name="file" accept="image/*, .doc, .pdf, .docx, video/*, audio/*" id="file">
+                    <textarea name="message" id="message" placeholder="Write a message"></textarea>
+                    {% for contact in contact %}
+                        <input type="hidden" name="friend" value="{{ contact.username }}">
+                    {% endfor %}
+                    <button type="submit">
+                        <i class="fa fa-paper-plane fa-lg"></i>
+                    </button>
+                    {% if token %}
+                        <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                        <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div id="button-div">
+            <p><a href= {{ url_for('myContact') }}><input type="button" value="Back to my contact" name="back" class="button button1"></a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

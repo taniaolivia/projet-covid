@@ -1,0 +1,40 @@
+{% extends 'main.twig' %}
+
+{% block title %}Groups{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <form method="post" action= {{ url_for('joinGroup') }}>
+            {% for group in gname %}
+                <h1>{{ group.name }}</h1>
+                <p><strong id="info">Group name : </strong><input type="hidden" name="groupname" value="{{ group.name }}"> {{ group.name }}</p>
+                <p><strong id="info">Members : </strong></p>
+                {% for group2 in members %}
+                    <ul class="grouplist">
+                        <li>{{ group2.user_username }}</li>
+                    </ul>
+                {% endfor %}
+                <br><p><button type="submit" id="submit">Join group</button></p>
+            {% endfor %}
+            {% if token %}
+                <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+            {% endif %}
+        </form>
+
+        <p id="message-warning">{{ message }}</p>
+
+        <div id="group-div">
+            <p><a href= {{ url_for('listGroups') }}><input type="button" value="Back to list groups" name="back" class="group group5"></a></p>
+            {% for group in gname %}
+                <form method="get" action={{ url_for('quitGroup') }}>
+                    <p><input type="hidden" name="quitGroup" value="{{ group.name }}"><input type="submit" value="Quit group" class="group group1"></p>
+                </form>
+                <p><a href= {{ url_for('createPost', {'group' : group.name}) }}><input type="button" value="Add post" class="group group2"></a></p>
+                <p><a href ={{ url_for('listPosts', {'group' : group.name}) }}><input type="hidden" name="listPosts" value="{{ group.name }}"><input type="submit" value="Board" class="group group3"></a></p>
+                <p><a href = {{ url_for('createChatGroup', {'name' : group.name}) }}><input type="submit" value="Group messenger" class="group group4"></a></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

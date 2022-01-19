@@ -1,0 +1,23 @@
+{% extends 'main.twig' %}
+
+{% block title %}Location of infected users{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Location of infected users</h1>
+            <div id="map"></div>
+        <div id="location-div">
+            {% for locations in locations %}
+                <input type="hidden" value="{{ locations.username }}" id="username">
+                <input type="hidden" value="{{ locations.latitude }}" id="lati">
+                <input type="hidden" value="{{ locations.longitude }}" id="longi">
+            {% endfor %}
+            <button id="infected" class="location1">Get all infected</button>
+        </div>
+        <div id="button-div">
+            <p><a href= {{ url_for('signin') }}><input type="button" value="Back to home" name="home" class="button button1"></a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

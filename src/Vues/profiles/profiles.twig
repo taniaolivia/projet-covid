@@ -1,0 +1,38 @@
+{% extends 'main.twig' %}
+
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Profile</h1>
+        <form method="post" action={{ url_for('addToContact') }}>
+            {% for profile in uname %}
+                <p><strong id="info">Username :  </strong><input type="hidden" name="username" value="{{ profile.username }}">{{ profile.username }}</p>
+                {% for user in info %}
+                    <p><strong id="info">Email : </strong>{{ user.email }}</p>
+                    <p><strong id="info">Infected : </strong>{{ user.infected }}</p>
+                    <p><strong id="info">Status : </strong>{{ user.status }}</p>
+                {% endfor %}
+                <button type="submit" id="submit">Add to contact</button>
+            {% endfor %}
+            {% if token %}
+                <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+            {% endif %}
+        </form>
+        <div id="map"></div>
+        <div id="location-div">
+            {% for location in location %}
+                <input type="hidden" value="{{ location.username }}" id="username">
+                <input type="hidden" value="{{ location.latitude }}" id="lati">
+                <input type="hidden" value="{{ location.longitude }}" id="longi">
+            {% endfor %}
+            <button id="infected" class="location1">Get profile's location</button>
+        </div>
+        <p id="message-warning">{{ message }}</p>
+        <div id="button-div">
+            <p><a href= {{ url_for('listUsers') }}><input type="button" value="Back to list users" name="back" class="button button1"></a></p>
+        </div>
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+
+  nginx:
+    container_name: slim_nginx
+    image: nginx:stable-alpine
+    ports:
+      - '8080:80'
+    volumes:
+      - .:/var/www/slim_app
+      - ./build/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mysql
+      - pma
+    networks:
+      - back-network
+
+  php:
+    container_name: slim_php
+    build:
+      context: ./build/docker/php
+    ports:
+      - '9001:9001'
+    volumes:
+      - .:/var/www/slim_app
+    networks:
+      - back-network
+
+  composer:
+    container_name: composer
+    image: composer:2.1
+    volumes:
+      - .:/app
+
+  mysql:
+    build:
+      context: ./build/docker/mysql
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: PWeb
+      MYSQL_USER: tania
+      MYSQL_PASSWORD: tolivia88
+      MYSQL_ROOT_PASSWORD: tolivia88
+    networks:
+      - back-network
+
+  pma:
+   image: phpmyadmin
+   ports:
+     - "8081:80"
+   environment:
+     MYSQL_ROOT_PASSWORD: tolivia88
+     MYSQL_USER: tania
+     MYSQL_PASSWORD: tolivia88
+     PMA_HOST: mysql
+   networks:
+    - back-network
+
+networks:
+  back-network:
+    driver: bridge

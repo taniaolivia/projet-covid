@@ -1,0 +1,18 @@
+{% extends 'main.twig' %}
+
+{% block title %}My contact{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>My contact</h1>
+        {% for user in list %}
+        <div class="nav-list">
+            <ul>
+                <li><a href= {{ url_for('contactProfiles', {'username' : user.contact_username}) }}>{{ user.contact_username }}</a>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

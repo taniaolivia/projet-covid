@@ -1,0 +1,18 @@
+{% extends 'main.twig' %}
+
+{% block title %}My group{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>My group</h1>
+        {% for group in list %}
+        <div class="nav-list">
+            <ul>
+                <li><a href= {{ url_for('groups', {'name' : group.group_name}) }}>{{ group.group_name }}</a>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

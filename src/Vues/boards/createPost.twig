@@ -1,0 +1,35 @@
+{% extends 'main.twig' %}
+
+{% block title %}Create a post{% endblock %}
+{% block content %}
+<div class="contentbg">
+    <div class="background">
+        <h1>Create a post</h1>
+        <form action= {{ url_for('addPost')}} method="post" enctype="multipart/form-data">
+            <p><strong id="info">Title : </strong><input type="text" name="title"></p>
+            <label for="description"><strong id="info">Description : </strong></label>
+            <p><textarea id="description" name="description"></textarea></p>
+            <p><label for="attachment"><strong id="info">Attachment : </strong></label>
+                <input type="file"
+                       id="attachment" name="file"
+                       accept= "image/*, .doc, .pdf, .docx, video/*, audio/*" onchange="loadFile(event)"></p>
+            <embed src="" width="100%" height="300px" id="outputfile"/>
+            {% for group in list %}
+                <input type="hidden" name="groupname" value={{ group.name }}>
+            {% endfor %}
+                <p><button type="submit" id="submit">Submit</button></p>
+            {% if token %}
+                <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+            {% endif %}
+        </form>
+        <p id="message-warning">{{ message }}</p>
+        <div id="button-div">
+            {% if group  %}
+                <p><a href= {{ url_for('groups', {'name': group} ) }}><input type="button" value="Back to group" name="back" class="button button1"></a></p>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

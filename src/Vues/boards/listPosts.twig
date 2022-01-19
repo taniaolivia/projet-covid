@@ -1,0 +1,44 @@
+{% extends 'main.twig' %}
+
+{% block title %}Board{% endblock %}
+{% block content %}
+    <div class="contentbg">
+        <div class="background">
+            <div id="board">
+                <h1>Board</h1>
+                <div class="search">
+                    <form method="post" action={{ url_for('searchPost') }}>
+                        <input type="text" placeholder="Search.." name="search" class="searchText">
+                        {% for group in list %}
+                            <input type="hidden" name="groupname" value={{ group.group_name }}>
+                        {% endfor %}
+                        <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
+                        {% if token %}
+                            <input type="hidden" name={{ token['nameKey'] }} value={{ token['name'] }}>
+                            <input type="hidden" name={{ token['valueKey'] }} value={{ token['value'] }}>
+                        {% endif %}
+                    </form>
+                    {% if group%}
+                        <p><a href= {{ url_for('groups', {'name': group} ) }}><button type="button" name="back" id="newGroup">Back to group</button></a></p>
+                    {% endif %}
+
+                </div>
+                {% for board in list %}
+                <div class="nav-list">
+                    <ul>
+                        <li><a href= {{ url_for('posts', {'group': board.group_name, 'title': board.title })}}>{{ board.title }}</a>
+                    </ul>
+                </div>
+                {% endfor %}
+                {% for board2 in listSearch %}
+                    <div class="nav-list">
+                        <ul>
+                            <li><a href= {{ url_for('posts', { 'group': board2.group_name, 'title': board2.title })}}>{{ board2.title }}</a>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
