@@ -39,9 +39,10 @@ services:
       context: ./build/docker/mysql
     container_name: mysql
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - ./mysql:/var/lib/mysql
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
     environment:
       MYSQL_DATABASE: PWeb
       MYSQL_USER: tania
